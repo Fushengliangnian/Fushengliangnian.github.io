@@ -1,3 +1,7 @@
+---
+layout: page
+title: 异步Celery
+---
 ## 基础概念
 
 ### 同步
@@ -124,6 +128,22 @@ class Scheduler(object):
   	"""
   	......
   	"""
+
+    def populate_heap(self, event_t=event_t, heapify=heapq.heapify):
+        """Populate the heap with the data contained in the schedule."""
+        priority = 5
+        self._heap = []
+        for entry in values(self.schedule):
+            is_due, next_call_delay = entry.is_due()
+            self._heap.append(event_t(
+                self._when(
+                    entry,
+                    0 if is_due else next_call_delay
+                ) or 0,
+                priority, entry
+            ))
+        heapify(self._heap)
+    
     # pylint disable=redefined-outer-name
     def tick(self, event_t=event_t, min=min, heappop=heapq.heappop,
              heappush=heapq.heappush):
@@ -175,6 +195,26 @@ class Scheduler(object):
 ```
 
 看到这里实际上可以发现, beat 是将所有的定时任务进行了最小堆排序, 判断堆最上面的那条记录是否执行。
+
+```python
+"""
+最小堆排序示例代码
+"""
+import random
+from heapq import heapify
+
+
+lis = list(range(150000))
+random.shuffle(lis)
+print("shuffle: ------")
+print(lis[:100])
+
+print("heapify: -----")
+heapify(lis)
+print(lis[:100])
+```
+
+
 
 ## 实际开发中的问题
 

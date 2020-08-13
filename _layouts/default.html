@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{% if page.title == "Home" %}
+        {{ site.title }} &middot; {{ site.tagline }}
+        {% else %}
+        {{ page.title }} &middot; {{ site.title }}
+        {% endif %}
+    </title>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css" />
+    </style>
+    <style>
+        /* 网站字体 */
+        .sidebar,
+        html,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Menlo, Monaco, "Courier New", Microsoft JhengHei, monospace;
+        }
+    </style>
+    <style>
+        /* 网站背景图片，分竖屏、宽屏 */
+        .wrap {
+            transition-property: width, background-size, transform;
+            transition-duration: .3s;
+            transition-timing-function: ease-in-out;
+            min-height: 100%;
+            display: inline-block;
+            background-size: 100% auto;
+            background-position: 0% 0%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-image: url(https://Mizuno-Ai.wu-kan.cn/pixiv/74559485_p1.webp);
+        }
+
+        @media (min-aspect-ratio: 2400/1850) {
+            .wrap {
+                background-image: url(https://Mizuno-Ai.wu-kan.cn/pixiv/71932901_p0.webp);
+            }
+        }
+
+        .sidebar-overlay #sidebar-checkbox:checked~.wrap {
+            width: calc(100% - 14rem);
+            background-size: calc(100% - 14rem) auto;
+            transform: translateX(14rem);
+        }
+
+        .layout-reverse.sidebar-overlay #sidebar-checkbox:checked~.wrap {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+
+<body class="theme-base-0d">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+    styles, `#sidebar-checkbox` for behavior. -->
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+    <!-- Toggleable sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-item">
+            ssss
+            <p>{{ site.description }}</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-nav-item{% if page.title == 'Home' %} active{% endif %}"
+                href="{{ '/' | absolute_url }}">Home</a>
+
+            {% comment %}
+            The code below dynamically generates a sidebar nav of pages with
+            `layout: page` in the front-matter. See readme for usage.
+            {% endcomment %}
+
+            {% assign pages_list = site.pages | sort:"url" %}
+            {% for node in pages_list %}
+            {% if node.title != null %}
+            {% if node.layout == "page" %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"
+                href="{{ node.url | absolute_url }}">{{ node.title }}</a>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a>
+            <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a>
+            <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+        </nav>
+
+        <div class="sidebar-item">
+            <p>
+                &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+        <style>
+            /* 代码块过长自动折叠 */
+            pre {
+                max-height: 66.6vh;
+                overflow: auto;
+            }
+        </style>
+        <style>
+            /* 增加宽屏下的显示内容 */
+            .container{
+                min-width: 66.6%;
+            }
+        </style>
+           <style>
+            /* 给文章加上磨砂背景，防止被背景影响阅读；同时加上加载动画 */
+            .masthead,
+            .container.content {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 0 .75rem rgba(0, 0, 0, 0.1);
+                background-color: rgba(255, 255, 255, .8);
+                animation-duration: 2s;
+                animation-name: fadeIn;
+            }
+    
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+    
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+        <div class="masthead">
+            <div class="container">
+                <h3 class="masthead-title">
+                    <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+                    <small>{{ site.tagline }}ddd</small>
+                </h3>
+            </div>
+        </div>
+
+        {{ content }}
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='{{ site.baseurl }}/public/js/script.js'></script>
+</body>
+<!-- mermaid -->
+<style>
+    pre.language-mermaid,
+    code.language-mermaid {
+        display: none;
+    }
+
+    .mermaid {
+        overflow: auto auto;
+        max-width: 100%;
+        max-height: 66.6vh;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@8.6.4/dist/mermaid.min.js" async="async" onload='
+          for(let x of document.getElementsByClassName("language-mermaid"))
+            if(x.nodeName=="CODE")
+            {
+              let m = document.createElement("div");
+              m.classList.add("mermaid");
+              m.textContent = x.textContent;
+              x.parentNode.insertAdjacentElement("beforebegin", m);
+            }'>
+            </script>
+<!-- prism -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.20.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.20.0/plugins/toolbar/prism-toolbar.min.css,gh/PrismJS/prism-themes@1955cfef6953b3a59e66016e8a1e016b45d6cc79/themes/prism-nord.min.css" />
+<script
+    src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.20.0/components/prism-core.min.js,npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.20.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.20.0/plugins/toolbar/prism-toolbar.min.js"
+    async="async" onload='
+  Prism.plugins.autoloader.languages_path = "https:\/\/cdn.jsdelivr.net/npm/prismjs@1.20.0/components/";
+  for(let x of document.getElementsByTagName("pre"))
+    x.classList.add("line-numbers");
+  Prism.plugins.toolbar.registerButton("select-code", function (env) {
+    let button = document.createElement("button");
+    button.textContent = "select this " + env.language;
+    button.addEventListener("click", function () {
+      if (document.body.createTextRange) {
+        let range = document.body.createTextRange();
+        range.moveToElementText(env.element);
+        range.select();
+      } else if (window.getSelection) {
+        let selection = window.getSelection();
+        let range = document.createRange();
+        range.selectNodeContents(env.element);
+        selection.removeAllRanges();
+          selection.addRange(range);
+      }
+    });
+    return button;
+  })'></script>
+
+</html>
